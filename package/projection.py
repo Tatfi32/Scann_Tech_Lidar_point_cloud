@@ -87,17 +87,21 @@ class Projector:
         point = self.translate(lidar_point)
         point = self.rotate(point)
         return point
-    # Performs project_point for each row in a dataFrame
-    # data is a pandas.DataFrame
+
+
     def project(self, data):
+        """
+        :param data: data is a pandas.DataFrame
+        Performs project_point for each row in a dataFrame
+        """
         with Timer() as t:
             coord = data[['X', 'Y', 'Z']].to_numpy()
-        print('project finished in %.03f s' % t.interval)
+        #print('project finished in %.03f s' % t.interval)
 
         with Timer() as t:
             for i in range(len(coord)):
                 coord[i, :] = self.project_point(coord[i, :])
-        print('iterator finished in %.03f s' % t.interval)
+        #print('iterator finished in %.03f s' % t.interval)
 
         return pd.DataFrame(coord, columns=['X', 'Y', 'Z'])
 

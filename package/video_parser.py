@@ -7,11 +7,16 @@ __all__ = ['Parser']
 
 class Parser:
     def __init__(self, path):
+        print("Processing video file from",path)
         self.path = path
 
     def proc_video_file(self, f):
+        """
+        :param f: video file to be processed
+        cut all video files to frames inside created "frames" folder
+        """
         cap = cv2.VideoCapture(f)
-        print('Opening video file ', f, '... ', cap.isOpened())
+        #print('Opening video file ', f, '... ', cap.isOpened())
         nFrames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         if (0 < nFrames):
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
@@ -26,6 +31,9 @@ class Parser:
             iframe += 1
 
     def read(self):
+        """"
+        read all folder video files and processed each of them with proc_video_file
+        """
         videoFName = self.path
         files = [videoFName]
         if isdir(videoFName):
